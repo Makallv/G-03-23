@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">HelloWorld</string>
+    <string name="name_1">Ieva Madara Glavecka</string>
+    <string name="name_2">Marks Cimermanis</string>
+    <string name="name_3">Kristiāns Žondaks</string>
+    <string name="welcomeMsg">This is the first application from Group 3:</string>
+    <string name="developMsg">And this application was developed by Ieva Madara Glavecka</string>
+
+</resources>
