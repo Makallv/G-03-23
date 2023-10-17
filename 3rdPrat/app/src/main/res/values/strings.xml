@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Prat3</string>
+    <string name="enter_text">Enter text</string>
+    <string name="save">Save</string>
+    <string name="go_to_2nd">Go to 2nd</string>
+    <string-array name="theme_array">
+        <item>Default</item>
+        <item>Dark Theme</item>
+        <item>Light Theme</item>
+    </string-array>
+</resources>

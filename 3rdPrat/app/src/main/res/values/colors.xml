@@ -1,0 +1,15 @@
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="colorPrimary">#6200EA</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+
+    <color name="colorPrimaryLight">#FF6200EA</color>
+    <color name="colorPrimaryDarkLight">#FF3700B3</color>
+    <color name="colorAccentLight">#FF03DAC5</color>
+
+    <color name="colorPrimaryDarker">#FF3700B3</color>
+    <color name="colorAccentDark">#FF03DAC5</color>
+</resources>
