@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/startDestinationTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start Destination"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/endDestinationTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/startDestinationTextView"
+            android:text="End Destination"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/dateTimeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/endDestinationTextView"
+            android:text="Date and Time"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/priceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dateTimeTextView"
+            android:text="Price"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/additionalInfoTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/priceTextView"
+            android:text="Additional Information"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+</LinearLayout>
