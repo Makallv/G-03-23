@@ -2,6 +2,7 @@ package com.example.calculatorapp
 
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -90,6 +91,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onMemoryClearClick(view: View) {
+        memoryValue = 0.0
+        currentValue = ""
         val display = findViewById<EditText>(R.id.display)
         display.text.clear()
     }
