@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/signUpText"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="Sign up:"
+        android:textAlignment="center"
+        android:textSize="40dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/usernameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:hint="Username" />
+
+    <EditText
+        android:id="@+id/nameEditText"
+        android:inputType="textPersonName"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:hint="Your name" />
+
+    <EditText
+        android:id="@+id/surnameEditText"
+        android:inputType="textPersonName"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:hint="Your surname" />
+
+    <EditText
+        android:id="@+id/emailEditText"
+        android:inputType="textEmailAddress"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:hint="Email" />
+
+    <EditText
+        android:id="@+id/phoneEditText"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:hint="Phone number" />
+
+    <EditText
+        android:id="@+id/passwordEditText"
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:hint="Password" />
+
+    <EditText
+        android:id="@+id/password2EditText"
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:hint="Repeat password" />
+
+    <Button
+        android:id="@+id/signupButton"
+        android:layout_width="309dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:text="Sign Up" />
+
+</LinearLayout>

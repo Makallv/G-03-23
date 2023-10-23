@@ -41,13 +41,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //ja nu gribam sign up, tad te ir, ja nē, tad to signup btn var freely izņemt
-        /*signupButton.setOnClickListener(new View.OnClickListener() {
+        signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SignupActivity.class);
+                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
-        });*/
+        });
     }
 }
