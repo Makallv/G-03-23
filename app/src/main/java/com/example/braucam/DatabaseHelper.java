@@ -5,6 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.Cursor;
+import android.util.Log;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -41,7 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "startLocation VARCHAR(20) NOT NULL, " +
                 "endLocation VARCHAR(20) NOT NULL, " +
                 "seatCount INTEGER NOT NULL, " +
-                "bookedSeats INTEGER NOT NULL, " +
+                "availableSeats INTEGER NOT NULL, " +
                 "price DOUBLE NOT NULL, " +
                 "carPlate VARCHAR(6) NOT NULL, " +
                 "startingDT DATE NOT NULL, " +
@@ -90,6 +99,71 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return isAuthenticated;
     }
 
+    public List<Ride> getAvailableRides() {
+        List<Ride> rides = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM rides WHERE strftime('%Y-%m-%d %H:%M:%S', startingDT) > strftime('%Y-%m-%d %H:%M:%S', 'now')";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                String startLocation = cursor.getString(cursor.getColumnIndex("startLocation"));
+                String endLocation = cursor.getString(cursor.getColumnIndex("endLocation"));
+                String startingDTString = cursor.getString(cursor.getColumnIndex("startingDT"));
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                Date startingDT = null;
+                try {
+                    startingDT = dateFormat.parse(startingDTString);
+                } catch (ParseException e) {
+                    e.printStackTrace(); // Handle the parse exception according to your needs
+                }
+                String info = cursor.getString(cursor.getColumnIndex("info"));
+                double price = cursor.getDouble(cursor.getColumnIndex("price"));
+                String carPlate = cursor.getString(cursor.getColumnIndex("carPlate"));
+                int seatCount = cursor.getInt(cursor.getColumnIndex("seatCount"));
+                int reservedSeats = cursor.getInt(cursor.getColumnIndex("availableSeats"));
+                int ownerId = cursor.getInt(cursor.getColumnIndex("ownerId"));
+
+
+                // Create Ride object and add it to the list
+                rides.add(new Ride(ownerId, startLocation, endLocation, startingDT, carPlate, info, price, seatCount, reservedSeats));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return rides;
+    }
+
+    public void addRide(Ride ride) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("ownerId", ride.getOwnerId());
+        values.put("startLocation", ride.getStartDestination());
+        values.put("endLocation", ride.getEndDestination());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        values.put("startingDT", dateFormat.format(ride.getDateAndTime()));
+        values.put("carPlate", ride.getCarPlate());
+        values.put("info", ride.getAdditionalInfo());
+        values.put("price", ride.getPrice());
+        values.put("seatCount", ride.getSeats());
+        values.put("availableSeats", 0);
+
+        // Insert the new ride into the rides table
+        db.insert("rides", null, values);
+        db.close();
+    }
+
+    public int getUserId(String userName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int userId = -1; // Default value indicating user not found
+
+        Cursor cursor = db.rawQuery("SELECT id FROM users WHERE username=?", new String[]{userName});
+        if (cursor.moveToFirst()) {
+            userId = cursor.getInt(cursor.getColumnIndex("id"));
+        }
+
+        cursor.close();
+        return userId;
+    }
     // database operations methods here
 }
 

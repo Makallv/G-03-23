@@ -4,9 +4,12 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.ParseException;
@@ -22,10 +25,11 @@ public class AddOfferActivity extends AppCompatActivity {
     private Button dateTimeEditText;
     private EditText additionalInfoEditText;
     private EditText priceEditText;
-    private boolean isBooked;
     private EditText maxSeatsEditText;
+    private EditText carPlateEditText;
     private Button addOfferButton;
-
+    private Button backButton;
+    private DatabaseHelper databaseHelper;
     private Calendar selectedDateTime = Calendar.getInstance();
 
     @Override
@@ -33,11 +37,14 @@ public class AddOfferActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_offer);
 
+        databaseHelper = DatabaseHelper.getInstance(this);
+        carPlateEditText = findViewById(R.id.carPlateEditText);
         startDestinationEditText = findViewById(R.id.startDestinationEditText);
         endDestinationEditText = findViewById(R.id.endDestinationEditText);
         priceEditText = findViewById(R.id.priceEditText);
         additionalInfoEditText = findViewById(R.id.additionalInfoEditText);
         addOfferButton = findViewById(R.id.addOfferButton);
+        backButton = findViewById(R.id.backButton);
         maxSeatsEditText = findViewById(R.id.maxSeatsEditText);
 
         dateTimeEditText = findViewById(R.id.dateTimeButton);
@@ -48,10 +55,20 @@ public class AddOfferActivity extends AppCompatActivity {
             }
         });
 
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddOfferActivity.this, ListActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
         addOfferButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendResult();
+
             }
         });
     }
@@ -94,14 +111,34 @@ public class AddOfferActivity extends AppCompatActivity {
     }
 
     private void sendResult() {
-        String startDestination = startDestinationEditText.getText().toString();
-        String endDestination = endDestinationEditText.getText().toString();
-        Date dateTime = selectedDateTime.getTime();
-        String additionalInfo = additionalInfoEditText.getText().toString();
-        double price = Double.parseDouble(priceEditText.getText().toString());
-        int seats = Integer.parseInt(maxSeatsEditText.getText().toString());
+        String startDestination;
+        String endDestination;
+        Date dateTime;
+        String dateTimeSting;
+        String additionalInfo;
+        String carPlate;
+        double price;
+        int seats;
+        int ownerId;
 
-        Ride ride = new Ride(startDestination, endDestination, dateTime, additionalInfo, price, seats, isBooked);
+        try{
+            startDestination = startDestinationEditText.getText().toString();
+            endDestination = endDestinationEditText.getText().toString();
+            dateTime = selectedDateTime.getTime();
+            dateTimeSting = dateTime.toString();
+            additionalInfo = additionalInfoEditText.getText().toString();
+            carPlate = carPlateEditText.getText().toString();
+            price = Double.parseDouble(priceEditText.getText().toString());
+            seats = Integer.parseInt(maxSeatsEditText.getText().toString());
+            ownerId = MainActivity.getSession().getId();
+        } catch(Exception e) {
+            Toast.makeText(AddOfferActivity.this, "Please fill out all the fields!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Ride ride = new Ride(ownerId, startDestination, endDestination, dateTime, carPlate, additionalInfo, price, seats, 0);
+
+        databaseHelper.addRide(ride);
 
         Intent resultIntent = new Intent();
         resultIntent.putExtra("NEW_RIDE", ride);

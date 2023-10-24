@@ -41,6 +41,13 @@
         android:hint="Available Seats" />
 
     <EditText
+        android:id="@+id/carPlateEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="Car plate: EX-1234" />
+
+    <EditText
         android:id="@+id/additionalInfoEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -54,5 +61,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="Add Offer" />
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Cancel" />
 
 </LinearLayout>

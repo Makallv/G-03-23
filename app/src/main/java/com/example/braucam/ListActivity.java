@@ -36,6 +36,7 @@ public class ListActivity extends AppCompatActivity {
     private final List<Ride> rides = new ArrayList<>();
     private Calendar selectedDate = null;
     private Button resetDateButton;
+    private DatabaseHelper databaseHelper;
 
     private final ActivityResultLauncher<Intent> addOfferLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -54,6 +55,9 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+        databaseHelper = DatabaseHelper.getInstance(this);
+
+        rides.addAll(databaseHelper.getAvailableRides());
 
         listView = findViewById(R.id.listView);
         newRideButton = findViewById(R.id.newRideButton);
@@ -118,8 +122,6 @@ public class ListActivity extends AppCompatActivity {
             }
         });
 
-        rides.addAll(getAvailableRides());
-
         adapter = new RideAdapter(this, rides);
 
         listView.setAdapter(adapter);
@@ -178,15 +180,6 @@ public class ListActivity extends AppCompatActivity {
     private void addRideToList(Ride ride) {
         rides.add(ride);
         adapter.notifyDataSetChanged();
-    }
-
-    public static List<Ride> getAvailableRides() {
-        return new ArrayList<>(List.of(
-                new Ride("San Francisco", "Los Angeles", createDate(12, 10, 2023, 12, 0), "HiHi", 100.1, 4, false),
-                new Ride("Los Angeles", "San Francisco", createDate(25, 10, 2023, 18, 0), "HeHe", 80.01, 4, false),
-                new Ride("New York", "Washington", createDate(13, 10, 2023, 6, 0), "HoHo", 120, 4, false),
-                new Ride("Washington", "New York", createDate(21, 10, 2023, 9, 30), "HaHa", 90, 4, false)
-        ));
     }
 
     private static Date createDate(int day, int month, int year, int hour, int minute) {

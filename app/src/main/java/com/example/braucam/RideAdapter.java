@@ -122,7 +122,7 @@ public class RideAdapter extends BaseAdapter {
             priceTextView.setText(formattedPrice + " Eur");
             additionalInfoTextView.setText(ride.getAdditionalInfo());
 
-            if (ride.isBooked()) {
+            if (ride.getReservedSeats() == ride.getSeats()) {
                 view.setBackgroundColor(ContextCompat.getColor(context, R.color.bookedColor));
             } else {
                 // Reset the background color if not booked
@@ -136,8 +136,7 @@ public class RideAdapter extends BaseAdapter {
     }
     public void updateBookingStatus(int position) {
         Ride ride = (Ride) getItem(position);
-        if (ride != null && !ride.isBooked()) {
-            ride.setBooked(true);
+        if (ride != null && ride.getReservedSeats() == ride.getSeats()) {
 
             notifyDataSetChanged();
         }

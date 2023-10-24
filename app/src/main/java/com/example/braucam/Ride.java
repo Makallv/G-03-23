@@ -8,27 +8,47 @@ public class Ride implements Serializable {
     private String startDestination;
     private String endDestination;
     private Date dateAndTime;
+    private String carPlate;
     private String additionalInfo;
     private double price;
     private int maxSeats;
-    private boolean isBooked;
+    private int reservedSeats;
+    private int ownerId;
 
-    public Ride(String startDestination, String endDestination, Date dateAndTime, String additionalInfo, double price, int maxSeats, boolean isBooked) {
+    public Ride(int ownerId, String startDestination, String endDestination, Date dateAndTime, String carPlate, String additionalInfo, double price, int maxSeats, int reservedSeats) {
+        this.ownerId = ownerId;
         this.startDestination = startDestination;
         this.endDestination = endDestination;
         this.dateAndTime = dateAndTime;
+        this.carPlate = carPlate;
         this.additionalInfo = additionalInfo;
         this.price = price;
         this.maxSeats = maxSeats;
-        this.isBooked = isBooked;
+        this.reservedSeats = reservedSeats;
     }
 
-    public boolean isBooked() {
-        return isBooked;
+    public int getOwnerId() {
+        return ownerId;
     }
 
-    public void setBooked(boolean booked) {
-        isBooked = booked;
+    public String getCarPlate() {
+        return carPlate;
+    }
+
+    public void setCarPlate(String plate) {
+        this.carPlate = plate;
+    }
+
+    public int getReservedSeats() {
+        return reservedSeats;
+    }
+
+    public void setReservedSeats(int reserved) {
+        this.reservedSeats = reserved;
+    }
+
+    public void addReservedSeats() {
+        this.reservedSeats++;
     }
     public String getStartDestination() {
         return startDestination;

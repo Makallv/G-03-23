@@ -50,10 +50,10 @@ public class DetailActivity extends AppCompatActivity {
                 bookingButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (clickedRide != null && !clickedRide.isBooked()) {
+                        if (clickedRide != null) {
                             Toast.makeText(DetailActivity.this, "Booked!", Toast.LENGTH_SHORT).show();
-                            clickedRide.setBooked(true);
-                        } else if (clickedRide != null && clickedRide.isBooked()) {
+                            clickedRide.addReservedSeats();
+                        } else if (clickedRide != null) {
                             Toast.makeText(DetailActivity.this, "You've already booked this!", Toast.LENGTH_SHORT).show();
                         }
                     }
