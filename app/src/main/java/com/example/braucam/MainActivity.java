@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText passwordEditText;
     private Button loginButton;
     private Button signupButton;
+    private DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.loginButton);
         signupButton = findViewById(R.id.signupButton);
 
+        databaseHelper = DatabaseHelper.getInstance(this);
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,8 +39,16 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Please enter a username and password.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Intent intent = new Intent(MainActivity.this, ListActivity.class);
-                startActivity(intent);
+
+                // Authenticate user
+                if (databaseHelper.authenticateUser(username, password)) {
+                    // User authenticated, navigate to the ListActivity
+                    Intent intent = new Intent(MainActivity.this, ListActivity.class);
+                    startActivity(intent);
+                } else {
+                    // Authentication failed, show error message
+                    Toast.makeText(MainActivity.this, "Invalid username or password.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
