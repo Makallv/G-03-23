@@ -22,6 +22,8 @@ public class AddOfferActivity extends AppCompatActivity {
     private Button dateTimeEditText;
     private EditText additionalInfoEditText;
     private EditText priceEditText;
+    private boolean isBooked;
+    private EditText maxSeatsEditText;
     private Button addOfferButton;
 
     private Calendar selectedDateTime = Calendar.getInstance();
@@ -36,6 +38,7 @@ public class AddOfferActivity extends AppCompatActivity {
         priceEditText = findViewById(R.id.priceEditText);
         additionalInfoEditText = findViewById(R.id.additionalInfoEditText);
         addOfferButton = findViewById(R.id.addOfferButton);
+        maxSeatsEditText = findViewById(R.id.maxSeatsEditText);
 
         dateTimeEditText = findViewById(R.id.dateTimeButton);
         dateTimeEditText.setOnClickListener(new View.OnClickListener() {
@@ -93,11 +96,12 @@ public class AddOfferActivity extends AppCompatActivity {
     private void sendResult() {
         String startDestination = startDestinationEditText.getText().toString();
         String endDestination = endDestinationEditText.getText().toString();
-        Date dateTime = selectedDateTime.getTime(); // Use the selectedDateTime directly
+        Date dateTime = selectedDateTime.getTime();
         String additionalInfo = additionalInfoEditText.getText().toString();
         double price = Double.parseDouble(priceEditText.getText().toString());
+        int seats = Integer.parseInt(maxSeatsEditText.getText().toString());
 
-        Ride ride = new Ride(startDestination, endDestination, dateTime, additionalInfo, price);
+        Ride ride = new Ride(startDestination, endDestination, dateTime, additionalInfo, price, seats, isBooked);
 
         Intent resultIntent = new Intent();
         resultIntent.putExtra("NEW_RIDE", ride);

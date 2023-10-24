@@ -10,15 +10,26 @@ public class Ride implements Serializable {
     private Date dateAndTime;
     private String additionalInfo;
     private double price;
+    private int maxSeats;
+    private boolean isBooked;
 
-    public Ride(String startDestination, String endDestination, Date dateAndTime, String additionalInfo, double price) {
+    public Ride(String startDestination, String endDestination, Date dateAndTime, String additionalInfo, double price, int maxSeats, boolean isBooked) {
         this.startDestination = startDestination;
         this.endDestination = endDestination;
         this.dateAndTime = dateAndTime;
         this.additionalInfo = additionalInfo;
         this.price = price;
+        this.maxSeats = maxSeats;
+        this.isBooked = isBooked;
     }
 
+    public boolean isBooked() {
+        return isBooked;
+    }
+
+    public void setBooked(boolean booked) {
+        isBooked = booked;
+    }
     public String getStartDestination() {
         return startDestination;
     }
@@ -49,6 +60,13 @@ public class Ride implements Serializable {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+    public double getSeats() {
+        return maxSeats;
+    }
+
+    public void setSeats(int seats) {
+        this.maxSeats = maxSeats;
     }
 
     public String getAdditionalInfo() {

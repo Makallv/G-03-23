@@ -34,6 +34,13 @@
         android:hint="Price" />
 
     <EditText
+        android:id="@+id/maxSeatsEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="Available Seats" />
+
+    <EditText
         android:id="@+id/additionalInfoEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

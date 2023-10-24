@@ -14,36 +14,12 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/dateTimeTextView"
+            android:id="@+id/detailedView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:textAlignment="center"
-            android:text="Date and Time"/>
-
-        <TextView
-            android:id="@+id/startDestinationTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textAlignment="center"
-            android:text="Start Destination"/>
-
-        <TextView
-            android:id="@+id/endDestinationTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textAlignment="center"
-            android:text="End Destination"/>
-
-        <TextView
-            android:id="@+id/priceTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textAlignment="center"
-            android:text="Price"/>
+            android:text="Details"/>
 
         <TextView
             android:id="@+id/additionalInfoTextView"
