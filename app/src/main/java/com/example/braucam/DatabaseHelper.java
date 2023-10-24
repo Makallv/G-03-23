@@ -7,10 +7,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.Cursor;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -55,6 +57,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "carPlate VARCHAR(6) NOT NULL, " +
                 "startingDT DATE NOT NULL, " +
                 "info TEXT, " +
+                "bookerIDs VARCHAR(50), " +
                 "UNIQUE (id), " +
                 "FOREIGN KEY (ownerId) REFERENCES Users(id)" +
                 ");");
@@ -123,10 +126,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 int seatCount = cursor.getInt(cursor.getColumnIndex("seatCount"));
                 int reservedSeats = cursor.getInt(cursor.getColumnIndex("availableSeats"));
                 int ownerId = cursor.getInt(cursor.getColumnIndex("ownerId"));
-
+                int ID = cursor.getInt(cursor.getColumnIndex("id"));
+                String bookerIDs = cursor.getString(cursor.getColumnIndex("bookerIDs"));
 
                 // Create Ride object and add it to the list
-                rides.add(new Ride(ownerId, startLocation, endLocation, startingDT, carPlate, info, price, seatCount, reservedSeats));
+                rides.add(new Ride(ID, ownerId, startLocation, endLocation, startingDT, carPlate, info, price, seatCount, reservedSeats, bookerIDs));
+
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -146,6 +151,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("price", ride.getPrice());
         values.put("seatCount", ride.getSeats());
         values.put("availableSeats", 0);
+        values.put("bookerIDs", ride.getbookerIDs());
 
         // Insert the new ride into the rides table
         db.insert("rides", null, values);
@@ -163,6 +169,60 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         cursor.close();
         return userId;
+    }
+
+
+    public String addBooking(Ride ride) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Log.d("DetailActivity", ride.getEndDestination());
+
+        // Retrieve the existing bookerIDs string from the ride
+        String existingBookerIDs = ride.getbookerIDs();
+
+        if (existingBookerIDs == null) {
+            existingBookerIDs = "";
+        }
+
+        String[] bookerIDs = existingBookerIDs.split(" ");
+        List<String> bookerIDList = new ArrayList<>(Arrays.asList(bookerIDs));
+
+        String rideOwnString = ride.getOwnerId() + "";
+        String sessionIdString = MainActivity.getSession().getId() + "";
+        if (!bookerIDList.contains(sessionIdString) && !sessionIdString.equals(rideOwnString) && bookerIDList.size() <= ride.getSeats()) {
+            // User can book the ride
+            bookerIDList.add(sessionIdString);
+            // Join the list to create the updated bookerIDs string
+            String updatedBookerIDs = String.join(" ", bookerIDList);
+            ride.setbookerIDs(updatedBookerIDs);
+            ride.addReservedSeats();
+
+            // Update the bookerIDs field in the database
+            ContentValues values = new ContentValues();
+            values.put("bookerIDs", updatedBookerIDs);
+
+            // Construct the WHERE clause for the specific ride based on its ID
+            String selection = "id = ?";
+            String[] selectionArgs = { String.valueOf(ride.getID()) };
+
+            // Execute the update query
+            int rowsAffected = db.update("rides", values, selection, selectionArgs);
+
+            if (rowsAffected > 0) {
+                return "You booked this ride";
+            } else {
+                return "Something went wrong";
+            }
+        } else if (bookerIDList.contains(sessionIdString)){
+            return "You have already booked this ride";
+        } else if (sessionIdString.equals(rideOwnString)) {
+            return "You can't book your own rides";
+        } else if (bookerIDList.size() > ride.getSeats()) {
+            return "This ride if full";
+        }
+
+        // Close the database connection
+        db.close();
+        return "Something went wrong";
     }
     // database operations methods here
 }

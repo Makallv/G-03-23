@@ -1,10 +1,13 @@
 package com.example.braucam;
 
+import static java.sql.Types.NULL;
+
 import java.io.Serializable;
 import java.util.Date;
 
 public class Ride implements Serializable {
 
+    private int ID;
     private String startDestination;
     private String endDestination;
     private Date dateAndTime;
@@ -14,8 +17,9 @@ public class Ride implements Serializable {
     private int maxSeats;
     private int reservedSeats;
     private int ownerId;
+    private String bookerIDs;
 
-    public Ride(int ownerId, String startDestination, String endDestination, Date dateAndTime, String carPlate, String additionalInfo, double price, int maxSeats, int reservedSeats) {
+    public Ride(int ID, int ownerId, String startDestination, String endDestination, Date dateAndTime, String carPlate, String additionalInfo, double price, int maxSeats, int reservedSeats, String bookerIDs) {
         this.ownerId = ownerId;
         this.startDestination = startDestination;
         this.endDestination = endDestination;
@@ -25,14 +29,28 @@ public class Ride implements Serializable {
         this.price = price;
         this.maxSeats = maxSeats;
         this.reservedSeats = reservedSeats;
+        this.bookerIDs = bookerIDs;
+        this.ID = ID;
+    }
+
+    public String getbookerIDs() {
+        return this.bookerIDs;
+    }
+
+    public int getID() {
+        return this.ID;
+    }
+
+    public void setbookerIDs(String newBookerIDs) {
+        this.bookerIDs = newBookerIDs;
     }
 
     public int getOwnerId() {
-        return ownerId;
+        return this.ownerId;
     }
 
     public String getCarPlate() {
-        return carPlate;
+        return this.carPlate;
     }
 
     public void setCarPlate(String plate) {
@@ -40,18 +58,14 @@ public class Ride implements Serializable {
     }
 
     public int getReservedSeats() {
-        return reservedSeats;
-    }
-
-    public void setReservedSeats(int reserved) {
-        this.reservedSeats = reserved;
+        return this.reservedSeats;
     }
 
     public void addReservedSeats() {
         this.reservedSeats++;
     }
     public String getStartDestination() {
-        return startDestination;
+        return this.startDestination;
     }
 
     public void setStartDestination(String startDestination) {
@@ -59,7 +73,7 @@ public class Ride implements Serializable {
     }
 
     public String getEndDestination() {
-        return endDestination;
+        return this.endDestination;
     }
 
     public void setEndDestination(String endDestination) {
@@ -67,7 +81,7 @@ public class Ride implements Serializable {
     }
 
     public Date getDateAndTime() {
-        return dateAndTime;
+        return this.dateAndTime;
     }
 
     public void setDateAndTime(Date dateAndTime) {
@@ -75,14 +89,14 @@ public class Ride implements Serializable {
     }
 
     public double getPrice() {
-        return price;
+        return this.price;
     }
 
     public void setPrice(double price) {
         this.price = price;
     }
     public double getSeats() {
-        return maxSeats;
+        return this.maxSeats;
     }
 
     public void setSeats(int seats) {
@@ -90,7 +104,7 @@ public class Ride implements Serializable {
     }
 
     public String getAdditionalInfo() {
-        return additionalInfo;
+        return this.additionalInfo;
     }
 
     public void setAdditionalInfo(String additionalInfo) {

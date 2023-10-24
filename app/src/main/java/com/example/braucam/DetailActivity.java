@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,10 +15,13 @@ import java.util.Locale;
 
 public class DetailActivity extends AppCompatActivity {
 
+    private DatabaseHelper databaseHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        databaseHelper = DatabaseHelper.getInstance(this);
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -50,12 +54,10 @@ public class DetailActivity extends AppCompatActivity {
                 bookingButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (clickedRide != null) {
-                            Toast.makeText(DetailActivity.this, "Booked!", Toast.LENGTH_SHORT).show();
-                            clickedRide.addReservedSeats();
-                        } else if (clickedRide != null) {
-                            Toast.makeText(DetailActivity.this, "You've already booked this!", Toast.LENGTH_SHORT).show();
-                        }
+                        Log.d("SessionIDS", MainActivity.getSession().getId() + "");
+                        Log.d("SessionIDS", clickedRide.getOwnerId() + "");
+                        String toastText = databaseHelper.addBooking(clickedRide);
+                        Toast.makeText(DetailActivity.this, toastText, Toast.LENGTH_SHORT).show();
                     }
                 });
             }

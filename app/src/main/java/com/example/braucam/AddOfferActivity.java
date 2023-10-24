@@ -120,12 +120,13 @@ public class AddOfferActivity extends AppCompatActivity {
         double price;
         int seats;
         int ownerId;
+        int ID = 1;
+        String bookerIDs = "";
 
         try{
             startDestination = startDestinationEditText.getText().toString();
             endDestination = endDestinationEditText.getText().toString();
             dateTime = selectedDateTime.getTime();
-            dateTimeSting = dateTime.toString();
             additionalInfo = additionalInfoEditText.getText().toString();
             carPlate = carPlateEditText.getText().toString();
             price = Double.parseDouble(priceEditText.getText().toString());
@@ -136,7 +137,7 @@ public class AddOfferActivity extends AppCompatActivity {
             return;
         }
 
-        Ride ride = new Ride(ownerId, startDestination, endDestination, dateTime, carPlate, additionalInfo, price, seats, 0);
+        Ride ride = new Ride(ID, ownerId, startDestination, endDestination, dateTime, carPlate, additionalInfo, price, seats, 0, bookerIDs);
 
         databaseHelper.addRide(ride);
 

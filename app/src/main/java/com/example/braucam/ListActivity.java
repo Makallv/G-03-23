@@ -43,10 +43,8 @@ public class ListActivity extends AppCompatActivity {
             result -> {
                 if (result.getResultCode() == RESULT_OK) {
                     Intent data = result.getData();
-                    if (data != null) {
-                        Ride newRide = (Ride) data.getSerializableExtra("NEW_RIDE");
-                        addRideToList(newRide);
-                    }
+                    Intent intent = new Intent(ListActivity.this, ListActivity.class);
+                    startActivity(intent);
                 }
             }
     );
@@ -177,10 +175,7 @@ public class ListActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
-    private void addRideToList(Ride ride) {
-        rides.add(ride);
-        adapter.notifyDataSetChanged();
-    }
+
 
     private static Date createDate(int day, int month, int year, int hour, int minute) {
         Calendar calendar = Calendar.getInstance();
