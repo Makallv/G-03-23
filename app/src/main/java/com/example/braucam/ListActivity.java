@@ -36,6 +36,7 @@ public class ListActivity extends AppCompatActivity {
     private final List<Ride> rides = new ArrayList<>();
     private Calendar selectedDate = null;
     private Button resetDateButton;
+    private Button logOutButton;
     private DatabaseHelper databaseHelper;
 
     private final ActivityResultLauncher<Intent> addOfferLauncher = registerForActivityResult(
@@ -66,10 +67,20 @@ public class ListActivity extends AppCompatActivity {
         datePickerButton = findViewById(R.id.dateTimePicker);
         resetDateButton = findViewById(R.id.resetDateTimePicker);
 
+        logOutButton = findViewById(R.id.logOutButton);
+
         datePickerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePicker();
+            }
+        });
+
+        logOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -36,8 +36,9 @@ public class DetailActivity extends AppCompatActivity {
                 detailedTextView.setText(formattedTime + "\n" +
                         clickedRide.getStartDestination()+ " - " +
                         clickedRide.getEndDestination()+ " (" +
-                        String.format(Locale.getDefault(), "%.2f", clickedRide.getPrice()) + ") Eur");
-                additionalInfoTextView.setText(clickedRide.getAdditionalInfo());
+                        String.format(Locale.getDefault(), "%.2f", clickedRide.getPrice()) + " Eur)\n" +
+                        "Car number plate:" + clickedRide.getCarPlate());
+                additionalInfoTextView.setText("Additional info: " + clickedRide.getAdditionalInfo());
 
                 Button backToListButton = findViewById(R.id.backToListButton);
                 backToListButton.setOnClickListener(new View.OnClickListener() {

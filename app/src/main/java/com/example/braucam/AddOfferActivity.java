@@ -114,7 +114,6 @@ public class AddOfferActivity extends AppCompatActivity {
         String startDestination;
         String endDestination;
         Date dateTime;
-        String dateTimeSting;
         String additionalInfo;
         String carPlate;
         double price;
@@ -122,6 +121,7 @@ public class AddOfferActivity extends AppCompatActivity {
         int ownerId;
         int ID = 1;
         String bookerIDs = "";
+        ownerId = MainActivity.getSession().getId();
 
         try{
             startDestination = startDestinationEditText.getText().toString();
@@ -131,7 +131,7 @@ public class AddOfferActivity extends AppCompatActivity {
             carPlate = carPlateEditText.getText().toString();
             price = Double.parseDouble(priceEditText.getText().toString());
             seats = Integer.parseInt(maxSeatsEditText.getText().toString());
-            ownerId = MainActivity.getSession().getId();
+
         } catch(Exception e) {
             Toast.makeText(AddOfferActivity.this, "Please fill out all the fields!", Toast.LENGTH_SHORT).show();
             return;

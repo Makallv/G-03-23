@@ -213,9 +213,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 return "Something went wrong";
             }
         } else if (bookerIDList.contains(sessionIdString)){
-            return "You have already booked this ride";
+            return "You have already booked this ride" + ride.getbookerIDs();
         } else if (sessionIdString.equals(rideOwnString)) {
-            return "You can't book your own rides";
+            return "You can't book your own rides" + ride.getbookerIDs();
         } else if (bookerIDList.size() > ride.getSeats()) {
             return "This ride if full";
         }
